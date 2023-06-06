@@ -1,0 +1,87 @@
+import requests
+
+# Replace with your game id
+
+game_id = "your_game_id"
+
+# Get the game access token
+
+response = requests.post(
+
+    "https://www.googleapis.com/games/v1management/applications/played",
+
+    json={"applicationId": game_id},
+
+    headers={"Authorization": f"Bearer {api_key}"}
+
+)
+
+game_access_token = response.json()["accessToken"]
+
+# Create a new player
+
+response = requests.post(
+
+    "https://ff.play.games.qq.com/v1/players",
+
+    json={"game_access_token": game_access_token},
+
+    headers={"Authorization": f"Bearer {api_key}"}
+
+)
+
+player_id = response.json()["player_id"]
+
+# Link the player to the game
+
+response = requests.put(
+
+    f"https://ff.play.games.qq.com/v1/players/{player_id}/link",
+
+    json={"game_access_token": game_access_token},
+
+    headers={"Authorization": f"Bearer {api_key}"}
+
+)
+
+# Get the player's account details
+
+response = requests.get(
+
+    f"https://ff.play.games.qq.com/v1/players/{player_id}",
+
+    headers={"Authorization": f"Bearer {api_key}"}
+
+)
+
+player_details = response.json()
+
+# Create a new account
+
+response = requests.post(
+
+    "https://ff.play.games.qq.com/v1/accounts",
+
+    json={
+
+        "game_access_token": game_access_token,
+
+        "player_id": player_id,
+
+        "username": player_details["username"],
+
+        "password": player_details["username"]
+
+    },
+
+    headers={"Authorization": f"Bearer {api_key}"}
+
+)
+
+account_id = response.json()["account_id"]
+
+# Link the account to the player
+
+response = requests.put(
+
+    f"https://ff.play.games.qq.com/v1/accounts/{account
